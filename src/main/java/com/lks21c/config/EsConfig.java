@@ -24,27 +24,31 @@ import java.net.UnknownHostException;
 public class EsConfig {
     private Logger logger = LoggerFactory.getLogger(EsConfig.class);
 
-    @Value("${es.host}")
-    private String esHost;
+    @Value("${es.transport.host}")
+    private String esTransportHost;
 
-    @Value("${es.port}")
-    private int esPort;
+    @Value("${es.transport.port}")
+    private int esTransportPort;
 
+    @Value("${es.rest.host}")
+    private String esRestHost;
+
+    @Value("${es.rest.port}")
+    private int esRestPort;
 
     @Bean(destroyMethod = "close")
     public TransportClient transportClient() throws UnknownHostException {
         Settings settings = Settings.builder()
                 .put("cluster.name", "alyes").build();
         TransportClient client = new PreBuiltTransportClient(settings)
-                .addTransportAddress(new TransportAddress(InetAddress.getByName(esHost), esPort));
-
+                .addTransportAddress(new TransportAddress(InetAddress.getByName(esTransportHost), esTransportPort));
         return client;
     }
 
     @Bean
     public RestClient restClient() {
         RestClient restClient = RestClient.builder(
-                new HttpHost(esHost, esPort, "http")
+                new HttpHost(esRestHost, esRestPort, "http")
         ).build();
         return restClient;
     }
