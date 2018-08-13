@@ -355,7 +355,7 @@ public class EsIndexManagementTest {
                             client.admin().indices().prepareUpdateSettings(indexName).setSettings(Settings.builder()
                                     .put("refresh_interval", "-1")
                                     .build()).get();
-                            logger.info(cnt++ + " " + indexName + " refresh changed.");
+                            logger.info(cnt++ + " " + indexName + " refresh changed.(" + refreshInterval + " to -1)");
                         }
                     }
                 }
