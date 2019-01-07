@@ -599,7 +599,6 @@ public class EsIndexManagementTest {
                                     DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyyMMdd");
 
                                     String dateFromIndex = indexName.split("_")[indexName.split("_").length - 1];
-                                    logger.info(dateFromIndex);
 
                                     DateTime dateTimeFromIndex = fmt2.parseDateTime(dateFromIndex);
 
@@ -607,7 +606,7 @@ public class EsIndexManagementTest {
                                     int agingDays = Days.daysBetween(dateTimeFromIndex.toLocalDate(), curDateTime.toLocalDate()).getDays();
 
                                     if (agingDays > 45) {
-//                                        client.admin().indices().prepareClose(indexName).get();
+                                        client.admin().indices().prepareClose(indexName).get();
                                         logger.info(cnt++ + " " + indexName + " closed, agingDays = " + agingDays + "     " + status2);
                                     }
                                 } catch (Exception e) {
