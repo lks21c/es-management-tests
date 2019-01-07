@@ -577,9 +577,11 @@ public class EsIndexManagementTest {
         String[] lines = body.split("\n");
         int cnt = 0;
         for (String line : lines) {
-            logger.info("### line : " + line);
             String status = line.split(" ")[0];
-            if (!"red".equals(status)) {
+            String status2 = line.split(" ")[1];
+            if (!"red".equals(status) && line.contains("")) {
+
+                logger.info("### status2 : " + status2);
 
                 LocalDate date = LocalDate.now();
                 DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMdd");
