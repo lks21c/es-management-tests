@@ -605,7 +605,7 @@ public class EsIndexManagementTest {
                                     int agingDays = Days.daysBetween(dateTimeFromIndex.toLocalDate(), curDateTime.toLocalDate()).getDays();
 
                                     if (agingDays > 45) {
-                                        client.admin().indices().prepareClose(indexName).get();
+//                                        client.admin().indices().prepareClose(indexName).get();
                                         logger.info(cnt++ + " " + indexName + " deleted, agingDays = " + agingDays);
                                     }
                                 } catch (Exception e) {
