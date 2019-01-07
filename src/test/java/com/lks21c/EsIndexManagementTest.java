@@ -579,9 +579,7 @@ public class EsIndexManagementTest {
         for (String line : lines) {
             String status = line.split(" ")[0];
             String status2 = line.split(" ")[1];
-            if (!"red".equals(status) && line.contains("")) {
-
-                logger.info("### status2 : " + status2);
+            if (!"red".equals(status) && line.contains("") && "open".equals(status2)) {
 
                 LocalDate date = LocalDate.now();
                 DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMdd");
@@ -610,7 +608,7 @@ public class EsIndexManagementTest {
 
                                     if (agingDays > 45) {
 //                                        client.admin().indices().prepareClose(indexName).get();
-                                        logger.info(cnt++ + " " + indexName + " closed, agingDays = " + agingDays);
+                                        logger.info(cnt++ + " " + indexName + " closed, agingDays = " + agingDays + "     " + status2);
                                     }
                                 } catch (Exception e) {
                                     logger.info("exception with " + indexName + e.getMessage());
