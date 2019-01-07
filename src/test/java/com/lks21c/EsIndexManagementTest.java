@@ -577,6 +577,7 @@ public class EsIndexManagementTest {
         String[] lines = body.split("\n");
         int cnt = 0;
         for (String line : lines) {
+            logger.info("### line : " + line);
             String status = line.split(" ")[0];
             if (!"red".equals(status)) {
 
@@ -607,8 +608,7 @@ public class EsIndexManagementTest {
 
                                     if (agingDays > 45) {
 //                                        client.admin().indices().prepareClose(indexName).get();
-                                        logger.info("##### status : " + status);
-                                        logger.info(cnt++ + " " + indexName + " deleted, agingDays = " + agingDays);
+                                        logger.info(cnt++ + " " + indexName + " closed, agingDays = " + agingDays);
                                     }
                                 } catch (Exception e) {
                                     logger.info("exception with " + indexName + e.getMessage());
