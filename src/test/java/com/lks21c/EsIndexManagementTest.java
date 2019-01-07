@@ -548,4 +548,77 @@ public class EsIndexManagementTest {
     public void testBackup() throws IOException {
 //        restClient.performRequest("PUT", "/_snapshot/my_backup/" + "total_backup");
     }
+
+    @Test
+    public void closeDailyOldIndices() throws Exception {
+
+        String[] arrIndexContains = new String[]{
+                "profile_daily",
+                "cncl_profile",
+                "join_profile",
+                "mel_com_private_usell_dl",
+                "mel_com_private_preview",
+                "mel_com_private_sns_post",
+                "mel_com_private_sns_incoming",
+                "mel_com_private_mv_view",
+                "mel_com_private_like_accum",
+                "mel_com_private_like_conts",
+                "mel_com_private_accum_mem_act",
+                "mel_com_private_mem_act",
+                "mel_com_private_music_st_member",
+                "mel_com_private_dl",
+                "mel_com_private_pv_member",
+                "mel_com_private_cl_member"
+        };
+
+
+        Response r = restClient.performRequest("GET", "/_cat/indices");
+        String body = EntityUtils.toString(r.getEntity());
+        String[] lines = body.split("\n");
+        int cnt = 0;
+        for (String line : lines) {
+            String status = line.split(" ")[0];
+            if (!"red".equals(status)) {
+                LocalDate date = LocalDate.now();
+                DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMdd");
+                String dateString = date.toString(fmt);
+                if (!line.contains(dateString)) {
+                    String indexName = null;
+                    if (line.indexOf("mel_") > 0) {
+                        indexName = line.substring(line.indexOf("mel_"), line.length()).split(" ")[0];
+                    } else if (line.indexOf("mtk_") > 0) {
+                        indexName = line.substring(line.indexOf("mtk_"), line.length()).split(" ")[0];
+                    }
+
+                    if (indexName != null) {
+                        for (String arrIndexContain : arrIndexContains) {
+                            if (indexName.contains(arrIndexContain) && !indexName.contains("realtime")) {
+                                try {
+                                    DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyyMMdd");
+
+                                    String dateFromIndex = indexName.split("_")[indexName.split("_").length - 1];
+                                    logger.info(dateFromIndex);
+
+                                    DateTime dateTimeFromIndex = fmt2.parseDateTime(dateFromIndex);
+
+                                    DateTime curDateTime = new DateTime();
+                                    int agingDays = Days.daysBetween(dateTimeFromIndex.toLocalDate(), curDateTime.toLocalDate()).getDays();
+
+                                    if (agingDays > 45) {
+                                        client.admin().indices().prepareClose(indexName).get();
+                                        logger.info(cnt++ + " " + indexName + " deleted, agingDays = " + agingDays);
+                                    }
+                                } catch (Exception e) {
+                                    logger.info("exception with " + indexName + e.getMessage());
+                                }
+                            }
+                        }
+                    } else {
+//                    logger.info("date not existed " + line);
+                    }
+                }
+            }
+
+        }
+    }
 }
