@@ -579,6 +579,7 @@ public class EsIndexManagementTest {
         for (String line : lines) {
             String status = line.split(" ")[0];
             if (!"red".equals(status)) {
+
                 LocalDate date = LocalDate.now();
                 DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMdd");
                 String dateString = date.toString(fmt);
@@ -606,6 +607,7 @@ public class EsIndexManagementTest {
 
                                     if (agingDays > 45) {
 //                                        client.admin().indices().prepareClose(indexName).get();
+                                        logger.info("##### status : " + status);
                                         logger.info(cnt++ + " " + indexName + " deleted, agingDays = " + agingDays);
                                     }
                                 } catch (Exception e) {
