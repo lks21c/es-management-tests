@@ -637,7 +637,7 @@ public class EsIndexManagementTest {
         Statement s = connection.createStatement();
 //        boolean r = s.execute("show databases");
 
-        boolean r = s.execute("select count(1) from  sys_matrix.mel_com_private_user_profile");
+        boolean r = s.execute("select count(1) from  stats.sys_matrix.mel_com_private_user_profile");
         System.out.println(s.getResultSet().first());
     }
 }
