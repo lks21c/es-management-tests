@@ -209,7 +209,7 @@
         <dependency>
             <groupId>com.facebook.presto</groupId>
             <artifactId>presto-jdbc</artifactId>
-            <version>0.202</version>
+            <version>0.194</version>
         </dependency>
     </dependencies>
 
