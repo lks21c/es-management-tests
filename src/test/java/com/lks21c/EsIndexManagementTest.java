@@ -637,7 +637,7 @@ public class EsIndexManagementTest {
 
 //        boolean r = s.execute("select count(1) as temp from  stats.sys_matrix.mel_com_private_user_profile");
 //        System.out.println(s.getResultSet().first());
-        ResultSet rs = s.executeQuery("select count(1) as temp from  stats.sys_matrix.mel_com_private_user_profile");
+        ResultSet rs = s.executeQuery("select artist_id, album_id, song_id from  stats.ma_conts.o_partr_song_day limit 10");
         while(rs.next()) {
             logger.info("#### rs : " + rs.getString(1));
         }
