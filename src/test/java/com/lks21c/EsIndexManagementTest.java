@@ -22,12 +22,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -621,5 +622,24 @@ public class EsIndexManagementTest {
             }
 
         }
+    }
+    @Test
+    public void testConnection() throws SQLException {
+        // URL parameters
+        String url = "jdbc:presto://mpcollect01:18080/hive/sys_matrix";
+        Properties properties = new Properties();
+        properties.setProperty("user", "presto");
+        properties.setProperty("password", "presto");
+//        properties.setProperty("password", "");
+//        properties.setProperty("SSL", "false");
+        properties.setProperty("SSL", "true");
+
+        Connection connection = DriverManager.getConnection(url, properties);
+
+        Statement s = connection.createStatement();
+        boolean r = s.execute("show databases");
+
+//        boolean r = s.execute("select count(1) from  sys_matrix.mel_com_private_user_profile");
+        System.out.println(s.getResultSet().first());
     }
 }
