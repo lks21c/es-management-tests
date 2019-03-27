@@ -639,7 +639,7 @@ public class EsIndexManagementTest {
 //        System.out.println(s.getResultSet().first());
         ResultSet rs = s.executeQuery("select artist_id, album_id, song_id from  stats.ma_conts.o_partr_song_day limit 10");
         while(rs.next()) {
-            logger.info("#### rs : " + rs.getString(1));
+            logger.info("artist_id : " + rs.getString(1) + "    album_id : " + rs.getString(2) + "    song_id : " + rs.getString(3));
         }
     }
 }
