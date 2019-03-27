@@ -623,6 +623,7 @@ public class EsIndexManagementTest {
 
         }
     }
+
     @Test
     public void testConnection() throws SQLException {
         // URL parameters
