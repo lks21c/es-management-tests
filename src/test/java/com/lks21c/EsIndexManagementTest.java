@@ -632,8 +632,8 @@ public class EsIndexManagementTest {
         properties.setProperty("user", "presto");
         properties.setProperty("password", "presto");
 //        properties.setProperty("password", "");
-//        properties.setProperty("SSL", "false");
-        properties.setProperty("SSL", "true");
+        properties.setProperty("SSL", "false");
+//        properties.setProperty("SSL", "true");
 
         Connection connection = DriverManager.getConnection(url, properties);
 
