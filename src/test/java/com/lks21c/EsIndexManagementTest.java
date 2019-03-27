@@ -629,8 +629,8 @@ public class EsIndexManagementTest {
         // URL parameters
         String url = "jdbc:presto://mpcollect01:18080/hive/sys_matrix";
         Properties properties = new Properties();
-        properties.setProperty("user", "presto");
-        properties.setProperty("password", "presto");
+//        properties.setProperty("user", "presto");
+//        properties.setProperty("password", "presto");
 //        properties.setProperty("password", "");
         properties.setProperty("SSL", "false");
 //        properties.setProperty("SSL", "true");
