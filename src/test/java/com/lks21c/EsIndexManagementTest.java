@@ -22,13 +22,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -637,7 +635,11 @@ public class EsIndexManagementTest {
         Statement s = connection.createStatement();
 //        boolean r = s.execute("show databases");
 
-        boolean r = s.execute("select count(1) as temp from  stats.sys_matrix.mel_com_private_user_profile");
-        System.out.println(s.getResultSet().first());
+//        boolean r = s.execute("select count(1) as temp from  stats.sys_matrix.mel_com_private_user_profile");
+//        System.out.println(s.getResultSet().first());
+        ResultSet rs = s.executeQuery("select count(1) as temp from  stats.sys_matrix.mel_com_private_user_profile");
+        while(rs.next()) {
+            logger.info("#### rs : " + rs.getString(1));
+        }
     }
 }
